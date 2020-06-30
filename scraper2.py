@@ -29,7 +29,7 @@ def get_securities(company_name):
     #Dictionary to maintain the symbol name and scrip codes
     # key -> symbol value --> scripcode
     securities = {}
-    
+    temp = {}
     #Fetching all securities with name containing the given string
 
     #fetching from bse
@@ -46,7 +46,7 @@ def get_securities(company_name):
         scripcodes = re.search('([A-Z-0-9]*)$',ns).group(1)
         bse_list.append((symbols,scripcodes))
         securities[symbols] = scripcodes
-    print(bse_list)
+    
 
     #fetching from nse 
     conn,payload,headers = get_conn('nse')
@@ -54,14 +54,15 @@ def get_securities(company_name):
     res = conn.getresponse()
     data = res.read()
     symbols_json = json.loads(data.decode("utf-8"))
+
     for element in symbols_json["symbols"]:
-        if element['symbol'] in list(securities.keys()):
-            print("present")
-        else:
-            print("not present")
+        print(element['symbol'])
+        if element['symbol'] in securities.keys():
+            temp[element['symbol']] = securities[element['symbol']]
+        
 
     #returning only the common securities on both the exchanges
-    return securities
+    return temp
 
 
 def compute_difference(temp,selected_symbol):
@@ -96,6 +97,7 @@ def get_bse_price(scripcode):
 
 company_name = input("enter company name::")
 securities = get_securities(company_name.lower())
+print(securities)
 symbol_name = input("select a symbol from above list::")
 
 i = 1
