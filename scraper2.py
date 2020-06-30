@@ -5,7 +5,6 @@ import re
 from bs4 import BeautifulSoup
 import time
 
-
 names_list = []
 
 def get_conn(site):
