@@ -81,8 +81,8 @@ def get_nse_price(company_name):
     res = conn.getresponse()
     data = res.read()
     jdict = json.loads(data.decode("utf-8"))
-    print(jdict["priceInfo"]["close"])
-    return jdict["priceInfo"]["close"]
+    print(jdict["priceInfo"]["lastPrice"])
+    return jdict["priceInfo"]["lastPrice"]
 
 def get_bse_price(scripcode):
     conn,payload,headers = get_conn('bse')
@@ -93,6 +93,15 @@ def get_bse_price(scripcode):
     print(jdict["CurrVal"])
     return jdict["CurrVal"]
 
+def get_graph_data(company_name):
+    conn,payload,headers = get_conn('nse')
+    conn.request("GET", "/api/chart-databyindex?index=TCSEQN&preopen=true", payload, headers)
+    res = conn.getresponse()
+    data = res.read()
+    jdict = json.loads(data.decode("utf-8"))
+    print(jdict)
+
+
 
 company_name = input("enter company name::")
 securities = get_securities(company_name.lower())
@@ -100,7 +109,7 @@ print(securities)
 symbol_name = input("select a symbol from above list::")
 
 i = 1
-while i < 10:
+while i < 100:
     time.sleep(1)
     compute_difference(securities,symbol_name)
     i += 1

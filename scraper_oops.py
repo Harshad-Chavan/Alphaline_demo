@@ -1,25 +1,16 @@
-import http.client
-import mimetypes
-from bs4 import BeautifulSoup
-import re
-
-names_list = []
-conn = http.client.HTTPSConnection("api.bseindia.com")
-payload = ''
-headers = {}
-conn.request("GET", "/Msource/1D/getQouteSearch.aspx?Type=EQ&text=infosys&flag=nw", payload, headers)
-res = conn.getresponse()
-data = res.read()
-parsed_html = BeautifulSoup(data,'html.parser')
-l = parsed_html.find_all('span',attrs = {'class' : ''})
-regex = "<span>([A-z,0-9,-]*)"
-for x in l:
-    m = re.search(regex,str(x))
-    names_list.append(m.group(1))
-    
-    
-print(names_list)
+from datetime import datetime, timedelta
+import time
+nse = 1593594900000
+temp = datetime.utcfromtimestamp(nse / 1000)
+time_diff = 59
+for x in range(1,10):
+    nse_time = (temp + timedelta(seconds=time_diff)).strftime('%H:%M:%S') 
 
 
+bse = "Wed Jul 01 2020 09:15:59" 
+bse_time = (datetime.strptime(bse, "%a %b %d %Y %H:%M:%S")).time()
 
-# print(data.decode("utf-8"))
+print(str(bse_time))
+print(type(nse_time))
+
+print(str(bse_time) == nse_time)
