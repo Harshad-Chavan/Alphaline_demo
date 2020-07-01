@@ -17,6 +17,7 @@ def get_conn(site):
             'Cookie': ''
             }
         return conn_nse,payload_nse,headers_nse
+    
     #BSE connection settings
     elif site == 'bse':
         conn_bse = http.client.HTTPSConnection("api.bseindia.com")
@@ -26,18 +27,19 @@ def get_conn(site):
 
 
 def get_nse_data():
+    #fetching graph data from nse
     conn,payload,headers = get_conn('nse')
     conn.request("GET", "https://www.nseindia.com/api/chart-databyindex?index=TCSEQN", payload, headers)
     res = conn.getresponse()
     data = res.read()
     jdict = json.loads(data.decode("utf-8"))
-    #fetch data from nse
     nse_data = jdict["grapthData"]
     return nse_data
 
 
 
 def get_bse_data():
+    #fetching graph data from bse
     conn,payload,headers = get_conn('bse')
     conn.request("GET", "/BseIndiaAPI/api/StockReachGraph/w?scripcode=532540&flag=0&fromdate=&todate=&seriesid=", payload, headers)
     res = conn.getresponse()
@@ -46,10 +48,6 @@ def get_bse_data():
     bse_data = json.loads(jdict["Data"])
     return bse_data
   
-def getnserecord(nse_data):
-    for data in nse_data:
-        curr_time = (datetime.utcfromtimestamp(data[0] / 1000))
-        yield curr_time,data[1]
 
 def getbserecord(bse_data):
     for data in bse_data:
@@ -75,4 +73,4 @@ compute_price(get_nse_data(),get_bse_data())
 for x in security.items():
     print(x)  
 
-
+    
