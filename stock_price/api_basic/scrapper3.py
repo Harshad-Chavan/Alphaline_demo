@@ -67,7 +67,8 @@ def compute_price():
        curr_time = (datetime.utcfromtimestamp(x[0] / 1000.0)).strftime('%Y-%m-%d %H:%M:%S')[:-3]
        curr_time = datetime.strptime(curr_time, "%Y-%m-%d %H:%M")
        if curr_time == intial_bse:
-            security[curr_time.strftime('%H:%M:%S')] = { "nseprice" : x[1] , "bseprice" : float(bse_price) , "diffprice": (x[1] - float(bse_price) } 
+            diff_price = x[1] - float(bse_price)
+            security[curr_time.strftime('%H:%M:%S')] = { "timestamp": curr_time.strftime('%H:%M:%S') ,"nseprice" : x[1] , "bseprice" : float(bse_price) , "diffprice":round(diff_price,2) } 
             intial_bse,bse_price = next(seq)
     return security    
             
