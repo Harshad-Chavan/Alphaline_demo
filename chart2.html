@@ -12,10 +12,14 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	title: {
 		text: "Daily Sales Data"
 	},
+    axisX:{},
 	axisY: {
 		title: "difference",
 		titleFontSize: 10
 	},
+    toolTip:{
+        content:"x: {z}, y: {y}" ,
+     },
 	data: [{
 		type: "line",
 		dataPoints: dataPoints
@@ -28,6 +32,7 @@ function addData(data) {
 		dataPoints.push({
 			x: i,
 			y: data[i]["diffprice"],
+            z: data[i]["timestamp"],
 		});
 	}
 	chart.render();
