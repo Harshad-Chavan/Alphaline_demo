@@ -2,15 +2,15 @@
 <html>
 <head>
 <script>
-window.onload = function() {
-
+var graph_show = function(company_name) {
+console.log(company_name)
 var dataPoints = [];
 
 var chart = new CanvasJS.Chart("chartContainer", {
 	animationEnabled: true,
 	theme: "light2",
 	title: {
-		text: "Daily Sales Data"
+		text: "Price Difference"
 	},
     axisX:{},
 	axisY: {
@@ -22,7 +22,8 @@ var chart = new CanvasJS.Chart("chartContainer", {
      },
 	data: [{
 		type: "line",
-		dataPoints: dataPoints
+		dataPoints: dataPoints,
+		
 	}]
 });
 
@@ -39,13 +40,40 @@ function addData(data) {
 
 }
 
-$.getJSON("http://192.168.0.111:8000/data/?format=json", addData);
+$.getJSON("http://192.168.0.111:8000/data/?format=json&flag=" + company_name, addData);
 
 }
+
+var list_sec = function(company_name) {
+
+	var settings = {
+  "url": "http://192.168.0.111:8000/seclist/?format=json&flag=" + company_name,
+  "method": "GET",
+  "timeout": 0,
+};
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+
+}
+
+
+
+
 </script>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<input type="search" id="gsearch" name="gsearch">
+<button onclick="graph_show(document.getElementById('gsearch').value)">search</button> 
+<button onclick="list_sec(document.getElementById('gsearch').value)" id="show" value="show">show</button> 
+<div id="chartContainer" style="height: 370px; width: 70%;"></div>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>

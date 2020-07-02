@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
-from api_basic.views import TaskViewSet
+from api_basic.views import TaskViewSet,SecListViewSet
 
 router = routers.DefaultRouter()
 router.register(r'data', TaskViewSet,basename='data')
+router.register(r'seclist', SecListViewSet,basename='seclist')
 
 urlpatterns = router.urls
 
