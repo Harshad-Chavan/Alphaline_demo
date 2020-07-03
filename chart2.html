@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 var graph_show = function(company_name) {
 console.log(company_name)
@@ -53,16 +54,38 @@ var list_sec = function(company_name) {
 };
 
 $.ajax(settings).done(function (response) {
-  console.log(response);
+  
+    var cList = $('ul.mylist')
+	$.each(response, function(i)
+	{	
+		console.log(response[i]["symbol_name"])
+    	var li = $('<li/>')
+        .addClass('ui-menu-item')
+        .attr('role', 'menuitem')
+        .appendTo(cList);
+    	var aaa = $('<a/>')
+        .addClass('ui-all')
+        .text("Symbol name -- " + response[i]["symbol_name"] + " Scripcode ---" + response[i]["scripcode"] )
+        .appendTo(li);
+	});	
+
 });
 }
 
 </script>
 </head>
 <body>
+<h3>Search company_name using show list button</h3>
+<button class="btn btn-success" onclick="list_sec(document.getElementById('show').value)" id="show_list" value="show">show list</button>
+<input type="search" id="show" name="show">
+
+<div><ul class="mylist"></ul></div>
+
+<h3>copy name from the list into the search box below</h3>
+<button class="btn btn-success" onclick="graph_show(document.getElementById('gsearch').value)" placeholder = "Company name">get price difference</button> 
 <input type="search" id="gsearch" name="gsearch">
-<button onclick="graph_show(document.getElementById('gsearch').value)">search</button> 
-<!--<button onclick="list_sec(document.getElementById('gsearch').value)" id="show" value="show">show</button>-->
+
+
 <div id="chartContainer" style="height: 370px; width: 70%;"></div>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">

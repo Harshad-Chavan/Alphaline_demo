@@ -35,6 +35,12 @@ def get_nse_data(name):
     data = res.read()
     jdict = json.loads(data.decode("utf-8"))
     nse_data = jdict["grapthData"]
+    if nse_data == []:
+        conn.request("GET", "https://www.nseindia.com/api/chart-databyindex?index="+ name + "BEN", payload, headers)
+        res = conn.getresponse()
+        data = res.read()
+        jdict = json.loads(data.decode("utf-8"))
+        nse_data = jdict["grapthData"]
     return nse_data
 
 

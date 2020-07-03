@@ -13,6 +13,7 @@ class TaskViewSet(viewsets.ViewSet):
         names = get_securities(request.query_params["flag"])
         name = list(names.keys())[0]
         scripcode = names[name]
+        print(name,scripcode)
         security = compute_price(name,scripcode)
         serializer = PriceSerializer(
             instance=security.values(), many=True)
