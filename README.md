@@ -10,6 +10,7 @@ Installtion steps to run the Application locally
 
 pre-requisties
 python version => 3.6
+git
 
 Steps for installtion
 
