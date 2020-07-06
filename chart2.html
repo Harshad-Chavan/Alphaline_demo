@@ -41,14 +41,14 @@ function addData(data) {
 
 }
 
-$.getJSON("http://192.168.0.111:8000/data/?format=json&flag=" + company_name, addData);
+$.getJSON("http://127.0.0.1:8000/data/?format=json&flag=" + company_name, addData);
 
 }
 
 var list_sec = function(company_name) {
 
 	var settings = {
-  "url": "http://192.168.0.111:8000/seclist/?format=json&flag=" + company_name,
+  "url": "http://127.0.0.1:8000/seclist/?format=json&flag=" + company_name,
   "method": "GET",
   "timeout": 0,
 };
