@@ -15,18 +15,18 @@ git
 Steps for installtion
 
 1) Clone the code from the repository or download zip:
-    git clone https://github.com/Harshad-Chavan/Alphaline.git
+    > git clone https://github.com/Harshad-Chavan/Alphaline.git
  
 2) Create a virtual environment
-    cd Alphaline
-    python -m venv env
+    > cd Alphaline
+    > python -m venv env
     
  3) activate the virtual environment:
     > cd env/scripts
     > acitvate
     
     for linux:
-    source env/bin/activate
+    # source env/bin/activate
     
 4) Once virtual environment is activated
    
